@@ -1,5 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.i_chat.MainActivity">
 
 
     <TextView
@@ -32,13 +35,13 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/emailid"
         android:layout_alignStart="@+id/emailid"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/editemail"
         android:layout_marginTop="46dp"
         android:text="Password:"
         android:textSize="22dp" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Name"
@@ -52,11 +55,11 @@
         android:hint="Name" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editText"
-        android:layout_alignRight="@+id/editText"
+        android:layout_alignEnd="@+id/editName"
+        android:layout_alignRight="@+id/editName"
         android:layout_below="@+id/Name"
         android:layout_marginTop="42dp"
         android:ems="10"
@@ -64,31 +67,31 @@
         android:hint="email-id" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4"
-        android:layout_below="@+id/editText4"
+        android:layout_alignLeft="@+id/editpassword"
+        android:layout_alignStart="@+id/editpassword"
+        android:layout_below="@+id/editpassword"
         android:layout_marginTop="24dp"
         android:text="Submit" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_below="@+id/button"
+        android:layout_alignLeft="@+id/submit"
+        android:layout_alignStart="@+id/submit"
+        android:layout_below="@+id/submit"
         android:text="Login" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/Password"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
+        android:layout_alignLeft="@+id/editemail"
+        android:layout_alignStart="@+id/editemail"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -96,7 +99,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText"
+        android:layout_above="@+id/editName"
         android:layout_marginBottom="42dp"
         android:layout_toEndOf="@+id/Password"
         android:layout_toRightOf="@+id/Password"
