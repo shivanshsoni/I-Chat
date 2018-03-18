@@ -60,7 +60,7 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/submitlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginpassword"
@@ -69,12 +69,12 @@
         android:text="Submit" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/registerlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button3"
-        android:layout_alignRight="@+id/button3"
-        android:layout_below="@+id/button3"
+        android:layout_alignEnd="@+id/submitlogin"
+        android:layout_alignRight="@+id/submitlogin"
+        android:layout_below="@+id/submitlogin"
         android:text="Register" />
 
 </RelativeLayout>
