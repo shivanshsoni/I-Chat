@@ -10,7 +10,22 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.firebase.client.Firebase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
+
+    /*
+        Created by Shivansh Soni on 17th March
+     */
 
     EditText username,pass,emailid;
     Button login,register;
@@ -24,36 +39,83 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.editName);
         pass = (EditText)findViewById(R.id.editpassword);
         emailid=(EditText)findViewById(R.id.editemail);
-        login=(Button)findViewById(R.id.submit);
-        register=(Button)findViewById(R.id.login);
+        login=(Button)findViewById(R.id.login);
+        register=(Button)findViewById(R.id.submit);
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Register.class));
-            }
-        });
+        Firebase.setAndroidContext(this);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Login.class));
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 name = username.getText().toString();
                 password = pass.getText().toString();
+                email = emailid.getText().toString();
 
-                if(name.isEmpty())
-                {
-                    Toast.makeText(MainActivity.this, "username cannot be blank", Toast.LENGTH_SHORT).show();
+                if(name.equals("") || name.length() < 5){
+                    username.setError("can't be blank or length cannot be less than 5");
                 }
-                else if(password.isEmpty() || password.length()<6)
-                {
-                    Toast.makeText(MainActivity.this, "password length can't be less than 6", Toast.LENGTH_SHORT).show();
+                else if(!name.matches("[A-Za-z0-9]+")){
+                    username.setError("only alphabet or number allowed");
                 }
-                else
+                else if(email.equals("") || email.length() < 12)
                 {
-                    final ProgressDialog pb = new ProgressDialog(MainActivity.this);
-                    pb.setMessage("Loading...");
+                    emailid.setError("wrong email id");
                 }
+                else if(password.equals("") || password.length() < 6){
+                    pass.setError("can't be blank or length cannot be less than 6");
+                }
+                else {
+                    final ProgressDialog pd = new ProgressDialog(MainActivity.this);
+                    pd.setMessage("Loading...");
+                    pd.show();
 
+                    String url = "https://ichat-81fb0.firebaseio.com/users.json";
+
+                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String s) {
+                            Firebase reference = new Firebase("https://ichat-81fb0.firebaseio.com/users");
+
+                            if(s.equals("null")) {
+                                reference.child(name).child("password").setValue(password);
+                                Toast.makeText(MainActivity.this, "registration successful", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                try {
+                                    JSONObject obj = new JSONObject(s);
+
+                                    if (!obj.has(name)) {
+                                        reference.child(name).child("password").setValue(pass);
+                                        Toast.makeText(MainActivity.this, "registration successful", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "username already exists", Toast.LENGTH_LONG).show();
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            pd.dismiss();
+                        }
+
+                    },new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            System.out.println("" + volleyError );
+                            pd.dismiss();
+                        }
+                    });
+                    RequestQueue rqueue = Volley.newRequestQueue(MainActivity.this);
+                    rqueue.add(request);
+                }
             }
         });
     }
